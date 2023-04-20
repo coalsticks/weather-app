@@ -1,28 +1,41 @@
 from flask import Flask, render_template, request
 import requests
+from config import apikey
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def home():
-    # response = request.get("")
 
     return render_template("home.html")
 
 
 @app.route('/location-weather', methods=['GET', 'POST'])
 def location_weather():
-    location = str(request.form.get("search").replace(" ", "+"))
-    response = requests.get("https://nominatim.openstreetmap.org/search?q={location}&format=json&limit=1")
-    lat = response.json()[0]['lat']
-    lon = response.json()[0]['lon']
+    location = str(request.form.get("search")) 
 
-    reverse_test = requests.get("https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=jsonv2")
+    param = {"q": location}
+    
+    response = requests.get(url="https://nominatim.openstreetmap.org/search?format=json&limit=1", params=param)
 
-    return render_template("location.html", location=reverse_test, lat=lat, lon=lon)
+    if response.status_code == 200:
+        lat = response.json()[0]['lat']
+        lon = response.json()[0]['lon']
+        params = {"lat": lat, "lon": lon, "appid": apikey}
+        weather_response = requests.get("https://api.openweathermap.org/data/2.5/weather?units=metric", params=params)
 
+        if weather_response.status_code == 200:
+            weather_description = weather_response.json()['weather'][0]['description']
 
+            weather_icon = weather_response.json()['weather'][0]['icon']
+
+            current_temperature = weather_response.json()['main']['temp']
+            humidity = weather_response.json()['main']['humidity']
+            pressure = weather_response.json()['main']['pressure']
+            
+            
+            return render_template("location.html", location=location, description=weather_description, temp=current_temperature, humidity=humidity, pressure=pressure, icon=weather_icon)
 
 
 

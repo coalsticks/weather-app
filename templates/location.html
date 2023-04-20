@@ -1,39 +1,68 @@
 {% extends 'base.html' %} {% block main %}
-<div class="flex flex-col justify-center items-center h-[50%]">
+<div class="flex flex-col justify-center items-center h-[50%] mt-6">
+  <!-- component -->
   <div
-    class="block rounded-lg bg-white text-center shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+    class="w-64 border b-gray-400 rounded flex flex-col justify-center items-center text-center p-6 bg-white"
   >
-    <div
-      class="border-b-2 border-neutral-100 px-6 py-3 dark:border-neutral-600 dark:text-neutral-50"
-    >
-      {{ location }}
+    <div class="text-md font-bold flex flex-col text-gray-900">
+      <span class="uppercase text-2xl">{{ location }}</span>
     </div>
-    <div class="p-6">
-      <h5
-        class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
-      >
-        Special title treatment
-      </h5>
-      <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-        latitude: {{ lat }}
-      </p>
-      <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-        longitude: {{ lon }}
-      </p>
-      <button
-        type="button"
-        class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-        data-te-ripple-init
-        data-te-ripple-color="light"
-      >
-        Button
-      </button>
+    <div class="w-32 h-32 flex items-center justify-center">
+      <img
+        src="static/icons/{{ icon }}.png"
+        alt="current temperature icon"
+      />
     </div>
-    <div
-      class="border-t-2 border-neutral-100 px-6 py-3 dark:border-neutral-600 dark:text-neutral-50"
-    >
-      2 days ago
+    <p class="text-gray-700 mb-2">{{ description }}</p>
+    <div class="text-3xl font-bold text-gray-900 mb-6">{{ temp }}ºC</div>
+    <div class="flex justify-between w-full">
+      <div class="flex items-center text-gray-700 px-2">
+        <svg
+          class="mr-2 h-4"
+          viewBox="0 0 11 18"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          title="Humidity"
+        >
+          <g
+            id="Page-1"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            <g
+              id="Desktop-HD"
+              transform="translate(-120.000000, -479.000000)"
+              fill="#60A2D7"
+              fill-rule="nonzero"
+            >
+              <g id="Group" transform="translate(95.000000, 222.000000)">
+                <g id="Group-3" transform="translate(25.000000, 256.774194)">
+                  <g id="028-drop" transform="translate(0.000000, 0.225806)">
+                    <path
+                      d="M11,11.9334341 C11,15.0552582 8.53750272,17.5862069 5.5,17.5862069 C2.46249728,17.5862069 0,15.0552582 0,11.9334341 C0,7.58026159 5.5,0 5.5,0 C5.5,0 11,7.58026159 11,11.9334341 L11,11.9334341 Z"
+                      id="Path"
+                    ></path>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+        {{ humidity }}%
+      </div>
+      <div class="flex items-center text-gray-700 px-2">
+        <img
+          src="static/images/pressure.png"
+          alt="pressure"
+          class="h-6 w-6"
+          title="Atmospheric Pressure"
+        />
+        {{ pressure }} hPA
+      </div>
     </div>
   </div>
+  {% endblock %}
 </div>
-{% endblock %}
